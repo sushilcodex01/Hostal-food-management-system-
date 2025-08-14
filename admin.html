@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hostel Food Menu - Admin Panel</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="admin-body">
+    <!-- Loading Screen -->
+    <div id="loadingScreen" class="loading-screen">
+        <div class="loading-spinner"></div>
+        <p>Loading Admin Panel...</p>
+    </div>
+
+    <!-- Admin Login Screen -->
+    <div id="adminLoginScreen" class="login-screen">
+        <div class="login-container">
+            <div class="login-header admin-header">
+                <i class="fas fa-shield-alt"></i>
+                <h1>Admin Panel</h1>
+                <p>Hostel Food Menu Management</p>
+            </div>
+            <form id="adminLoginForm" class="login-form">
+                <div class="form-group">
+                    <label for="adminUsername">
+                        <i class="fas fa-user-shield"></i>
+                        Admin Username
+                    </label>
+                    <input type="text" id="adminUsername" placeholder="Enter admin username" required>
+                </div>
+                <div class="form-group">
+                    <label for="adminPassword">
+                        <i class="fas fa-lock"></i>
+                        Password
+                    </label>
+                    <input type="password" id="adminPassword" placeholder="Enter admin password" required>
+                </div>
+                <button type="submit" class="btn-primary">
+                    <i class="fas fa-sign-in-alt"></i>
+                    Access Admin Panel
+                </button>
+            </form>
+            <div class="login-footer">
+                <a href="index.html" class="admin-link">
+                    <i class="fas fa-arrow-left"></i>
+                    Back to Student Portal
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Main Application -->
+    <div id="adminApp" class="main-app admin-app hidden">
+        <!-- Admin Header -->
+        <header class="app-header admin-header">
+            <div class="header-content">
+                <div class="header-left">
+                    <i class="fas fa-shield-alt"></i>
+                    <div class="header-text">
+                        <h1>Admin Panel</h1>
+                        <p>Menu Management System</p>
+                    </div>
+                </div>
+                <div class="header-right">
+                    <div class="user-info">
+                        <i class="fas fa-user-shield"></i>
+                        <span>Administrator</span>
+                    </div>
+                    <button id="adminLogoutBtn" class="btn-secondary">
+                        <i class="fas fa-sign-out-alt"></i>
+                        Logout
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Admin Navigation -->
+        <nav class="admin-nav">
+            <div class="nav-content">
+                <button class="nav-tab active" data-tab="dashboard">
+                    <i class="fas fa-tachometer-alt"></i>
+                    Dashboard
+                </button>
+                <button class="nav-tab" data-tab="menu-management">
+                    <i class="fas fa-utensils"></i>
+                    Menu Management
+                </button>
+                <button class="nav-tab" data-tab="user-management">
+                    <i class="fas fa-users"></i>
+                    User Management
+                </button>
+                <button class="nav-tab" data-tab="voting-results">
+                    <i class="fas fa-chart-line"></i>
+                    Voting Analytics
+                </button>
+                <button class="nav-tab" data-tab="weekly-planning">
+                    <i class="fas fa-calendar-week"></i>
+                    Weekly Menu Planning
+                </button>
+                <button class="nav-tab" data-tab="complaints-management">
+                    <i class="fas fa-comment-alt"></i>
+                    Complaints Management
+                </button>
+                <button class="nav-tab" data-tab="system-settings">
+                    <i class="fas fa-cogs"></i>
+                    System Settings
+                </button>
+            </div>
+        </nav>
+
+        <!-- Admin Main Content -->
+        <main class="admin-main-content">
+            <!-- Dashboard Tab -->
+            <section id="dashboard" class="admin-tab-content active">
+                <div class="dashboard-header">
+                    <h2><i class="fas fa-tachometer-alt"></i> Dashboard Overview</h2>
+                    <div class="dashboard-date" id="dashboardDate"></div>
+                </div>
+
+                <div class="dashboard-stats">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="totalStudents">0</h3>
+                            <p>Registered Students</p>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-vote-yea"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="todayVotes">0</h3>
+                            <p>Today's Votes</p>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-utensils"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="menuItems">0</h3>
+                            <p>Menu Items</p>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-percentage"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="participationRate">0%</h3>
+                            <p>Participation Rate</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dashboard-charts">
+                    <div class="chart-card">
+                        <h3>Today's Voting Progress</h3>
+                        <div id="votingProgressChart" class="chart-container">
+                            <!-- Chart will be populated here -->
+                        </div>
+                    </div>
+
+                    <div class="chart-card">
+                        <h3>Weekly Participation</h3>
+                        <div id="weeklyParticipationChart" class="chart-container">
+                            <!-- Chart will be populated here -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Menu Management Tab -->
+            <section id="menu-management" class="admin-tab-content">
+                <div class="section-header">
+                    <h2><i class="fas fa-utensils"></i> Menu Management</h2>
+                    <button id="addMenuItemBtn" class="btn-primary">
+                        <i class="fas fa-plus"></i>
+                        Add Menu Item
+                    </button>
+                </div>
+
+                <div class="menu-tabs">
+                    <button class="menu-tab active" data-meal="breakfast">
+                        <i class="fas fa-coffee"></i>
+                        Breakfast
+                    </button>
+                    <button class="menu-tab" data-meal="lunch">
+                        <i class="fas fa-hamburger"></i>
+                        Lunch
+                    </button>
+                    <button class="menu-tab" data-meal="dinner">
+                        <i class="fas fa-pizza-slice"></i>
+                        Dinner
+                    </button>
+                </div>
+
+                <div id="menuItemsContainer" class="menu-items-container">
+                    <!-- Menu items will be populated here -->
+                </div>
+            </section>
+
+            <!-- User Management Tab -->
+            <section id="user-management" class="admin-tab-content">
+                <div class="section-header">
+                    <h2><i class="fas fa-users"></i> User Management</h2>
+                    <button id="addUserBtn" class="btn-primary">
+                        <i class="fas fa-user-plus"></i>
+                        Add Student
+                    </button>
+                </div>
+
+                <div class="users-table-container">
+                    <table class="users-table">
+                        <thead>
+                            <tr>
+                                <th>Student ID</th>
+                                <th>Name</th>
+                                <th>Registration Date</th>
+                                <th>Last Vote</th>
+                                <th>Total Votes</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="usersTableBody">
+                            <!-- User data will be populated here -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Voting Results Tab -->
+            <section id="voting-results" class="admin-tab-content">
+                <div class="section-header">
+                    <h2><i class="fas fa-chart-line"></i> Voting Analytics</h2>
+                    <div class="analytics-controls">
+                        <div class="date-selector">
+                            <input type="date" id="analyticsDate" class="date-input">
+                            <button id="refreshAnalytics" class="btn-secondary">
+                                <i class="fas fa-sync-alt"></i>
+                                Refresh
+                            </button>
+                        </div>
+                        <div class="voting-status-indicator" id="votingStatusIndicator">
+                            <span class="status-dot"></span>
+                            <span class="status-text">Voting Open</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Voting Summary Cards -->
+                <div class="analytics-summary">
+                    <div class="summary-card">
+                        <div class="summary-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="summary-content">
+                            <h3 id="totalParticipants">0</h3>
+                            <p>Students Voted</p>
+                        </div>
+                    </div>
+                    <div class="summary-card">
+                        <div class="summary-icon">
+                            <i class="fas fa-vote-yea"></i>
+                        </div>
+                        <div class="summary-content">
+                            <h3 id="totalVotesCount">0</h3>
+                            <p>Total Votes</p>
+                        </div>
+                    </div>
+                    <div class="summary-card">
+                        <div class="summary-icon">
+                            <i class="fas fa-times-circle"></i>
+                        </div>
+                        <div class="summary-content">
+                            <h3 id="winnersCount">0</h3>
+                            <p>Skip Votes</p>
+                        </div>
+                    </div>
+                    <div class="summary-card">
+                        <div class="summary-icon">
+                            <i class="fas fa-percentage"></i>
+                        </div>
+                        <div class="summary-content">
+                            <h3 id="participationPercentage">0%</h3>
+                            <p>Participation</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Winners Section (Only visible when voting is closed) -->
+                <div id="winnersSection" class="winners-section" style="display: none;">
+                    <div class="section-header">
+                        <h3><i class="fas fa-crown"></i> Today's Winners</h3>
+                        <p>Top voted items for each meal</p>
+                    </div>
+                    <div id="winnersContainer" class="winners-container">
+                        <!-- Winners will be populated here -->
+                    </div>
+                </div>
+
+                <!-- Detailed Analytics -->
+                <div id="analyticsContainer" class="analytics-container">
+                    <!-- Analytics will be populated here -->
+                </div>
+            </section>
+
+            <!-- Weekly Menu Planning Tab -->
+            <section id="weekly-planning" class="admin-tab-content">
+                <div class="section-header">
+                    <h2><i class="fas fa-calendar-week"></i> Weekly Menu Planning</h2>
+                    <p>Plan menus up to 7 days in advance</p>
+                </div>
+
+                <div class="planning-container">
+                    <div class="planning-calendar">
+                        <h3>7-Day Menu Calendar</h3>
+                        <div id="weeklyCalendar" class="weekly-calendar">
+                            <!-- Calendar will be populated here -->
+                        </div>
+                    </div>
+
+                    <div class="menu-planning-panel">
+                        <div class="planning-header">
+                            <h3>Menu Planning for <span id="selectedDateDisplay">Select a Date</span></h3>
+                            <button id="addNewMenuItemBtn" class="btn-secondary">
+                                <i class="fas fa-plus"></i> Add New Menu Item
+                            </button>
+                        </div>
+                        
+                        <div id="menuPlanningContent" class="menu-planning-content">
+                            <div class="meal-planning-section">
+                                <h4><i class="fas fa-coffee"></i> Breakfast</h4>
+                                <div class="planned-items-container">
+                                    <div id="plannedBreakfast" class="planned-items">
+                                        <!-- Planned items will be shown here -->
+                                    </div>
+                                    <div class="available-items">
+                                        <select id="breakfastItemSelect" class="item-select">
+                                            <option value="">Select breakfast item to add</option>
+                                        </select>
+                                        <button class="btn-secondary" onclick="adminUI.addItemToDailyMenu('breakfast')">
+                                            <i class="fas fa-plus"></i> Add
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="meal-planning-section">
+                                <h4><i class="fas fa-hamburger"></i> Lunch</h4>
+                                <div class="planned-items-container">
+                                    <div id="plannedLunch" class="planned-items">
+                                        <!-- Planned items will be shown here -->
+                                    </div>
+                                    <div class="available-items">
+                                        <select id="lunchItemSelect" class="item-select">
+                                            <option value="">Select lunch item to add</option>
+                                        </select>
+                                        <button class="btn-secondary" onclick="adminUI.addItemToDailyMenu('lunch')">
+                                            <i class="fas fa-plus"></i> Add
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="meal-planning-section">
+                                <h4><i class="fas fa-pizza-slice"></i> Dinner</h4>
+                                <div class="planned-items-container">
+                                    <div id="plannedDinner" class="planned-items">
+                                        <!-- Planned items will be shown here -->
+                                    </div>
+                                    <div class="available-items">
+                                        <select id="dinnerItemSelect" class="item-select">
+                                            <option value="">Select dinner item to add</option>
+                                        </select>
+                                        <button class="btn-secondary" onclick="adminUI.addItemToDailyMenu('dinner')">
+                                            <i class="fas fa-plus"></i> Add
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="planning-actions">
+                                <button id="saveDailyMenuBtn" class="btn-primary">
+                                    <i class="fas fa-save"></i> Save Daily Menu
+                                </button>
+                                <button id="clearWeeklyMenuBtn" class="btn-danger">
+                                    <i class="fas fa-trash"></i> Clear Selected Day
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Complaints Management Tab -->
+            <section id="complaints-management" class="admin-tab-content">
+                <div class="section-header">
+                    <h2><i class="fas fa-comment-alt"></i> Complaints Management</h2>
+                    <p>Manage and track student complaints and feedback</p>
+                </div>
+
+                <!-- Complaints Overview Stats -->
+                <div class="complaints-stats">
+                    <div class="stat-card complaint-stat">
+                        <div class="stat-icon">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="todayComplaints">0</h3>
+                            <p>Today's Complaints</p>
+                        </div>
+                    </div>
+
+                    <div class="stat-card complaint-stat">
+                        <div class="stat-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="pendingComplaints">0</h3>
+                            <p>Pending Complaints</p>
+                        </div>
+                    </div>
+
+                    <div class="stat-card complaint-stat">
+                        <div class="stat-icon">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="resolvedComplaints">0</h3>
+                            <p>Resolved This Week</p>
+                        </div>
+                    </div>
+
+                    <div class="stat-card complaint-stat">
+                        <div class="stat-icon">
+                            <i class="fas fa-calendar-week"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="weekComplaints">0</h3>
+                            <p>This Week</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Complaints Filter Tabs -->
+                <div class="complaints-filter-tabs">
+                    <button class="filter-tab active" data-filter="today">
+                        <i class="fas fa-calendar-day"></i>
+                        Today
+                    </button>
+                    <button class="filter-tab" data-filter="yesterday">
+                        <i class="fas fa-history"></i>
+                        Yesterday
+                    </button>
+                    <button class="filter-tab" data-filter="week">
+                        <i class="fas fa-calendar-week"></i>
+                        This Week
+                    </button>
+                    <button class="filter-tab" data-filter="pending">
+                        <i class="fas fa-clock"></i>
+                        Pending
+                    </button>
+                    <button class="filter-tab" data-filter="resolved">
+                        <i class="fas fa-check-circle"></i>
+                        Resolved
+                    </button>
+                </div>
+
+                <!-- Complaints List -->
+                <div class="complaints-container">
+                    <div class="complaints-header">
+                        <h3 id="complaintsListTitle">Today's Complaints</h3>
+                        <div class="complaints-actions">
+                            <button id="exportComplaintsBtn" class="btn-secondary">
+                                <i class="fas fa-download"></i>
+                                Export
+                            </button>
+                            <button id="bulkResolveBtn" class="btn-success">
+                                <i class="fas fa-check-double"></i>
+                                Mark Selected as Resolved
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="complaintsList" class="complaints-list">
+                        <!-- Complaints will be populated here -->
+                    </div>
+                </div>
+
+                <!-- Complaint Details Modal -->
+                <div id="complaintDetailsModal" class="modal">
+                    <div class="modal-content complaint-modal">
+                        <div class="modal-header">
+                            <h3><i class="fas fa-comment-alt"></i> Complaint Details</h3>
+                            <button class="modal-close">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                            <div id="complaintDetailsContent">
+                                <!-- Complaint details will be populated here -->
+                            </div>
+                        </div>
+                        <div class="modal-actions">
+                            <button id="markResolvedBtn" class="btn-success">
+                                <i class="fas fa-check"></i>
+                                Mark as Resolved
+                            </button>
+                            <button id="addResponseBtn" class="btn-primary">
+                                <i class="fas fa-reply"></i>
+                                Add Response
+                            </button>
+                            <button class="btn-secondary modal-cancel">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- System Settings Tab -->
+            <section id="system-settings" class="admin-tab-content">
+                <div class="section-header">
+                    <h2><i class="fas fa-cogs"></i> System Settings</h2>
+                    <p>Configure system parameters and preferences</p>
+                </div>
+
+                <div class="settings-grid">
+                    <div class="setting-card">
+                        <h3><i class="fas fa-clock"></i> Voting Hours</h3>
+                        <div class="setting-content">
+                            <div class="form-group">
+                                <label>Voting Start Time</label>
+                                <input type="time" id="votingStartTime" value="00:00">
+                            </div>
+                            <div class="form-group">
+                                <label>Voting End Time</label>
+                                <input type="time" id="votingEndTime" value="12:00">
+                            </div>
+                            <button class="btn-primary">Save Voting Hours</button>
+                        </div>
+                    </div>
+
+                    <div class="setting-card">
+                        <h3><i class="fas fa-calendar"></i> Menu Cycle</h3>
+                        <div class="setting-content">
+                            <div class="form-group">
+                                <label>Menu Cycle Duration (days)</label>
+                                <input type="number" id="menuCycleDays" value="7" min="1" max="14">
+                            </div>
+                            <button class="btn-primary">Update Cycle</button>
+                        </div>
+                    </div>
+
+                    <div class="setting-card">
+                        <h3><i class="fas fa-database"></i> Data Management</h3>
+                        <div class="setting-content">
+                            <button class="btn-secondary">
+                                <i class="fas fa-download"></i>
+                                Export Data
+                            </button>
+                            <button class="btn-danger">
+                                <i class="fas fa-trash"></i>
+                                Clear Old Votes
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Add Menu Item Modal -->
+    <div id="addMenuItemModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-plus"></i> Add Menu Item</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <form id="addMenuItemForm" class="modal-form">
+                <div class="form-group">
+                    <label for="itemName">Item Name</label>
+                    <input type="text" id="itemName" placeholder="Enter menu item name" required>
+                </div>
+                <div class="form-group">
+                    <label for="itemMeal">Meal Type</label>
+                    <select id="itemMeal" required>
+                        <option value="">Select meal type</option>
+                        <option value="breakfast">Breakfast</option>
+                        <option value="lunch">Lunch</option>
+                        <option value="dinner">Dinner</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="itemDescription">Description</label>
+                    <textarea id="itemDescription" placeholder="Enter item description"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="itemImage">Item Image</label>
+                    <input type="file" id="itemImage" accept="image/*">
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn-secondary modal-cancel">Cancel</button>
+                    <button type="submit" class="btn-primary">Add Item</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add User Modal -->
+    <div id="addUserModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-user-plus"></i> Add Student</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <form id="addUserForm" class="modal-form">
+                <div class="form-group">
+                    <label for="newStudentName">Student Name</label>
+                    <input type="text" id="newStudentName" placeholder="Enter student name" required>
+                </div>
+                <div class="form-group">
+                    <label for="newStudentId">Student ID</label>
+                    <input type="text" id="newStudentId" placeholder="Enter student ID" required>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn-secondary modal-cancel">Cancel</button>
+                    <button type="submit" class="btn-primary">Add Student</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <!-- Scripts -->
+    <script type="module" src="firebaseconfig.js"></script>
+    <script type="module" src="script.js"></script>
+</body>
+</html>

@@ -1,7 +1,8 @@
 # Hostel Food Menu System 🍽️
 
 A comprehensive web-based hostel food menu management system with advanced complaint tracking, built using Firebase integration. This application enables students to vote on food preferences while providing administrators with powerful tools to manage menus and track feedback.
-
+## ✨ Demo = https://nghms.rf.gd/uploads/folder_1755183480/HostelMealVote/index.html
+## ✨ Replit link = https://replit.com/@SushilJat/HostelMealVote
 ## 🌟 Features
 
 ### Student Portal
